@@ -18,7 +18,7 @@ type InputDataStruct struct {
 }
 
 func ReadWordsFromFile() ([]string, error) {
-	file, err := os.Open("slowa.txt")
+	file, err := os.Open("test.txt")
 	if err != nil {
 		fmt.Println(err)
 		return words, err
@@ -90,23 +90,13 @@ func Calculate(letters InputDataStruct) (words []string) {
 
 func main() {
 
-	//	fmt.Println("Enter Your Yellow Letters: ")
-	//	fmt.Scanln(&yellowLetters)
-	//yellowLetters = "kra"
+	//	enter youur leters
 	i := InputDataStruct{
 		yellowLetters: []string{"a"},
-		blackLetters:  []string{"k", "r", "t", "y", "p", "e", "n", "i", "s", "m", "o", "u", "ł", "b", "j"},
-		greenLetters:  []string{"-", "a", "d", "a", "-"}}
+		blackLetters:  []string{"k", "r", "t", "y"},
+		greenLetters:  []string{"-", "-", "b", "-", "-"}}
 
 	ret := Calculate(i)
 	fmt.Println(ret)
-	//yellowLettersRuneTmp := []rune(yellowLetters)
-
-	//fmt.Println("Enter Your Black Letters: ")
-	//fmt.Scanln(&blackLetters)
-	//blackLetters = "od"
-	//blackLettersRuneTmp := []rune(blackLetters)
-
-	//fmt.Println(lettersRune)
 
 }
