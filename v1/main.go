@@ -18,7 +18,7 @@ type InputDataStruct struct {
 }
 
 func ReadWordsFromFile() ([]string, error) {
-	file, err := os.Open("test.txt")
+	file, err := os.Open("slowa.txt")
 	if err != nil {
 		fmt.Println(err)
 		return words, err
@@ -52,6 +52,20 @@ func LettersNotExist(word string, letters []string) bool {
 	return true
 }
 
+func IsLetterPosition(word string, letters []string) bool {
+
+	wordTmp := strings.Split(word, "")
+	for k, v := range letters {
+		if !(v < "a" || v > "z") {
+			if wordTmp[k] != letters[k] {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+
 func Calculate(letters InputDataStruct) (words []string) {
 	wordsTmp, err := ReadWordsFromFile()
 	if err != nil {
@@ -62,7 +76,8 @@ func Calculate(letters InputDataStruct) (words []string) {
 	for _, word := range wordsTmp {
 		str := []rune(word)
 		if len(str) == 5 {
-			if LettersExist(word, letters.yellowLetters) &&
+			if IsLetterPosition(word, letters.greenLetters) &&
+				LettersExist(word, letters.yellowLetters) &&
 				LettersNotExist(word, letters.blackLetters) {
 				words = append(words, word)
 			}
@@ -79,9 +94,9 @@ func main() {
 	//	fmt.Scanln(&yellowLetters)
 	//yellowLetters = "kra"
 	i := InputDataStruct{
-		yellowLetters: []string{"k", "r"},
-		blackLetters:  []string{"z", "u", "s"},
-		greenLetters:  []string{"-", "-", "e", "-", "-"}}
+		yellowLetters: []string{"a"},
+		blackLetters:  []string{"k", "r", "t", "y", "p", "e", "n", "i", "s", "m", "o", "u", "ł", "b", "j"},
+		greenLetters:  []string{"-", "a", "d", "a", "-"}}
 
 	ret := Calculate(i)
 	fmt.Println(ret)
