@@ -34,10 +34,31 @@ func ReadWordsFromFile() ([]string, error) {
 	return words, err
 }
 
-func LettersExist(word string, letters []string) bool {
-	for _, v := range letters {
-		if !strings.Contains(word, v) {
-			return false
+func LettersExistNotPosition(word string, letters []string) bool {
+	wordTmp := strings.Split(word, "")
+
+	for k, v := range letters {
+		if !(v < "a" || v > "z") {
+			if !strings.Contains(word, v) &&
+				wordTmp[k] != letters[k] {
+
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func LettersWithoutDouble(word string, letters []string) bool {
+	wordTmp := strings.Split(word, "")
+
+	for k, v := range letters {
+		if !(v < "a" || v > "z") {
+			if strings.Count(word, v) > 1 &&
+				wordTmp[k] == letters[k] {
+
+				return false
+			}
 		}
 	}
 	return true
@@ -77,8 +98,9 @@ func Calculate(letters InputDataStruct) (words []string) {
 		str := []rune(word)
 		if len(str) == 5 {
 			if IsLetterPosition(word, letters.greenLetters) &&
-				LettersExist(word, letters.yellowLetters) &&
-				LettersNotExist(word, letters.blackLetters) {
+				LettersExistNotPosition(word, letters.yellowLetters) &&
+				LettersNotExist(word, letters.blackLetters) &&
+				LettersWithoutDouble(word, letters.yellowLetters) {
 				words = append(words, word)
 			}
 		}
@@ -92,9 +114,10 @@ func main() {
 
 	//	enter youur leters
 	i := InputDataStruct{
-		yellowLetters: []string{"a"},
-		blackLetters:  []string{"k", "r", "t", "y"},
-		greenLetters:  []string{"-", "-", "b", "-", "-"}}
+		yellowLetters: []string{"-", "-", "a", "-", "-"},
+		blackLetters:  []string{"k", "w"},
+		greenLetters:  []string{"-", "a", "d", "-", "-"},
+	}
 
 	ret := Calculate(i)
 	fmt.Println(ret)
